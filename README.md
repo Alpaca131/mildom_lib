@@ -1,3 +1,7 @@
+[![Downloads](https://pepy.tech/badge/mildom)](https://pepy.tech/project/mildom)
+[![Downloads](https://pepy.tech/badge/mildom/month)](https://pepy.tech/project/mildom)
+[![Downloads](https://pepy.tech/badge/mildom/week)](https://pepy.tech/project/mildom)
+
 # これは何？
 Python用Mildom APIの非公式ライブラリです。
 開発途中です。
