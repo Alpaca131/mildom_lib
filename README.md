@@ -9,7 +9,7 @@ If you find any bugs, please report it on issues by English or Japanese.
 
 # 対応状況
 - ProfileV2 API
-- PlayBack API
+- PlayBack API (配信アーカイブ)
 
 # 対応予定
 - async/await(非同期処理)
@@ -48,7 +48,7 @@ if mildom.is_live(user_id):
     print('now on live')
 ```
 
-## PlayBackオブジェクト -PlayBack API-
+## PlayBack(アーカイブ)オブジェクト -PlayBack API-
 ```python
 import mildom
 user_id = 12345678
@@ -77,17 +77,4 @@ for playback in playback_list:
     
     # アーカイブのID(v_id)
     print(playback.v_id)
-```
-## アーカイブダウンロード
-```python
-import mildom
-user_id = 12345678
-user = mildom.User(user_id)
-playback = user.fetch_playback()[0]
-
-# アーカイブを配信タイトルでダウンロード
-playback.download(directory='/download')
-
-# ファイル名を指定してダウンロード
-playback.download(directory='/download', name='file.mp4')
 ```

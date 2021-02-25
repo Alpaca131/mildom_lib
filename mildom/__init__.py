@@ -63,13 +63,6 @@ class PlayBack:
         self.title = body.get('title')
         self.author = author
 
-    def download(self, directory, name=None):
-        if name is None:
-            name = self.title + '.mp4'
-        r = requests.get(self.source_url)
-        with open(f"{directory}/{name}", 'wb') as f:
-            f.write(r.content)
-
 
 def is_live(user_id: int) -> bool:
     if type(user_id) is not int:
