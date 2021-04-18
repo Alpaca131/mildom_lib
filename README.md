@@ -14,6 +14,7 @@ If you find any bugs, please report it on issues by English or Japanese.
 
 # 対応予定
 - async/await(非同期処理)
+- PlayBack APIでのアーカイブの範囲取得
 
 # 注意
 あくまでも**非公式APIの非公式ラッパー**です。開発が継続される保証はありません。
@@ -52,7 +53,6 @@ if mildom.is_live(user_id):
 ```
 
 ## PlayBack(アーカイブ)オブジェクト -PlayBack API-
-
 - 複数のアーカイブをリストで取得
 ```python
 import mildom
@@ -62,15 +62,15 @@ user = mildom.User(user_id)
 # "limit" argument is optional.
 playback_list: list = user.fetch_playback(limit=10)
 ```
-- 特定のアーカイブを取得
+- 特定のアーカイブを取得(fetch specific PlayBack)
 ```python
 import mildom
 user_id = 12345678
 user = mildom.User(user_id)
 
+# index starts from 0.
 playback = user.fetch_playback(index=10)
 ```
-
 Examples:
 ```python
 # URLを取得
@@ -79,4 +79,25 @@ print(playback.url)
 print(playback.title)
 # MP4のURLを取得
 print(playback.source_url)
+```
+### 注意
+「最新から2番目のアーカイブを取得したい」といった場合にはindexを指定してください。  
+使用しているAPIが異なるため、レスポンスを高速化できます。  
+以下は指定範囲のアーカイブをランダムに取得するテストにおけるレスポンス時間の平均値です。
+```
+0~425
+index api time: 0.045539161014556885
+----------------------------------------------
+legacy api time: 0.06734103298187255
+
+
+200~425
+index api time: 0.049199145197868346
+----------------------------------------------
+legacy api time: 0.08169150960445404
+
+300~425
+index api time: 0.049523269319534304
+----------------------------------------------
+legacy api time: 0.10116533222198486
 ```
