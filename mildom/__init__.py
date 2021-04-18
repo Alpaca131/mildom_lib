@@ -1,5 +1,5 @@
 from datetime import datetime
-
+from _warnings import warn
 import requests
 
 
@@ -34,20 +34,33 @@ class User:
         self.user_album = user_info.get('user_album')
         self.viewers = user_info.get('viewers')
         self.gift_revenue = user_info.get('gift_revenue_history')
-        self.latest_live_name = user_info.get('anchor_intro')
+        self.latest_live_title = user_info.get('anchor_intro')
         self.birth = user_info.get('birth')
 
-    def fetch_playback(self):
+    def fetch_playback(self, limit: int = 30, index: int = None):
         user_id = self.id
-        response = playback_request(user_id)
-        if response['code'] == 1:
-            raise ValueError('no user found')
-        body = response['body']
-        playback: dict
-        playback_list = []
-        for playback in body:
-            playback_list.append(PlayBack(playback, user_id, self))
-        return playback_list
+        if type(limit) is not int:
+            raise TypeError(f'must be int, not {type(index).__name__}')
+        if index is not None:
+            if type(index) is not int:
+                raise TypeError(f'must be int, not {type(index).__name__}')
+            if limit != 30:
+                warn('The "limit" argument was ignored because the "index" argument has been passed.')
+            limit = 1
+            response = playback_request(user_id, limit, index+1)
+            if response['code'] == 1:
+                raise ValueError('no user found')
+            playback = PlayBack(response['body'][0], user_id, self)
+            return playback
+        else:
+            response = playback_request(user_id, limit)
+            if response['code'] == 1:
+                raise ValueError('no user found')
+            body = response['body']
+            playback_list = []
+            for playback in body:
+                playback_list.append(PlayBack(playback, user_id, self))
+            return playback_list
 
     def update(self):
         self.__init__(self.id)
@@ -81,7 +94,12 @@ def profile_v2_request(user_id: int) -> dict:
     return response
 
 
-def playback_request(user_id: int) -> dict:
-    url = f"https://cloudac.mildom.com/nonolive/videocontent/profile/playbackList?user_id={user_id}"
+def playback_request(user_id: int, limit, page=None) -> dict:
+    if page is not None:
+        url = f"https://cloudac.mildom.com/nonolive/videocontent/profile/playbackList" \
+              f"?__platform=web&user_id={user_id}&limit={limit}&page={page}"
+    else:
+        url = f"https://cloudac.mildom.com/nonolive/videocontent/profile/playbackList" \
+              f"?__platform=web&user_id={user_id}&limit={limit}"
     response = requests.get(url).json()
     return response

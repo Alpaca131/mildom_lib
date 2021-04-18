@@ -5,6 +5,7 @@
 # これは何？
 Python用Mildom APIの非公式ライブラリです。
 開発途中です。<br>バグがあればGithubのissueをお願いします。<br>
+This is an unofficial api wrapper for Mildom.
 If you find any bugs, please report it on issues by English or Japanese.
 
 # 対応状況
@@ -26,9 +27,11 @@ If you find any bugs, please report it on issues by English or Japanese.
 import mildom
 user_id = 12345678
 
-#8桁のIDを指定してユーザーオブジェクトを作成
+# 8桁のIDを指定してユーザーオブジェクトを作成
 user = mildom.User(user_id)
-
+```
+Examples: 
+```python
 # bool値でライブ中かどうかを取得
 print(user.is_live)
 
@@ -49,32 +52,31 @@ if mildom.is_live(user_id):
 ```
 
 ## PlayBack(アーカイブ)オブジェクト -PlayBack API-
+
+- 複数のアーカイブをリストで取得
 ```python
 import mildom
 user_id = 12345678
 user = mildom.User(user_id)
 
-playback_list = user.fetch_playback()
-for playback in playback_list:
-    # タイトル
-    print(playback.title)
-    
-    # 視聴用URL
-    print(playback.url)
-    
-    # MP4のURL
-    print(playback.source_url)    
-    
-    # ゲームの情報
-    print(playback.game_info)
-    # > {'game_name': 'マインクラフト（Minecraft）(PC&Console)', 'game_type': 'pc'}
-    
-    # 配信者(Userオブジェクト)
-    print(playback.author)
-    
-    # 配信時刻(datetimeオブジェクト)
-    print(playback.publish_time)
-    
-    # アーカイブのID(v_id)
-    print(playback.v_id)
+# "limit" argument is optional.
+playback_list: list = user.fetch_playback(limit=10)
+```
+- 特定のアーカイブを取得
+```python
+import mildom
+user_id = 12345678
+user = mildom.User(user_id)
+
+playback = user.fetch_playback(index=10)
+```
+
+Examples:
+```python
+# URLを取得
+print(playback.url)
+# タイトルを取得
+print(playback.title)
+# MP4のURLを取得
+print(playback.source_url)
 ```
