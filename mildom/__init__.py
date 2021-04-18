@@ -1,5 +1,6 @@
-from datetime import datetime
 from _warnings import warn
+from datetime import datetime
+
 import requests
 
 
