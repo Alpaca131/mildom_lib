@@ -1,7 +1,7 @@
 from _warnings import warn
 from datetime import datetime
 
-import api_request
+from mildom.api_request import api_request
 
 
 class User:
