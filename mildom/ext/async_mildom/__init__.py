@@ -36,7 +36,6 @@ class User:
         self.viewers = user_info.get('viewers')
         self.gift_revenue = user_info.get('gift_revenue_history')
         self.latest_live_title = user_info.get('anchor_intro')
-        self.latest_live_thumbnail = user_info.get('pic')
         self.birth = user_info.get('birth')
 
     def fetch_playback(self, limit: int = 30, index: int = None):

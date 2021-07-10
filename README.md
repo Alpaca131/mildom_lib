@@ -20,6 +20,11 @@ If you find any bugs, please report it on issues by English or Japanese.
 あくまでも**非公式APIの非公式ラッパー**です。開発が継続される保証はありません。
 開発者は募集中です。
 
+# 破壊的変更
+バージョン2.0には破壊的変更を含みます。
+```python
+from mildom import api_request
+```
 # 使い方
 - ユーザーオブジェクトを作成して詳細を取得<br>
 情報を更新する時は、User.updateで情報を更新できます。
