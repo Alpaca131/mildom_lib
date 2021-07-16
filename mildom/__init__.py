@@ -1,7 +1,7 @@
 from _warnings import warn
 from datetime import datetime
 
-from mildom.api_request import api_request
+from mildom import api_request
 
 
 class User:
@@ -93,7 +93,7 @@ class LiveStream:
         self.live_description = response.get("live_intro")
         self.resolutions: list = []
         for i in response["ext"]["cmode_params"]:
-            self.resolutions.append(i["pixel"] + "p")
+            self.resolutions.append(str(i["pixel"]) + "p")
         self.special_gift_list = response.get("ext").get("special_gift_list")
         self.started_since = datetime.fromtimestamp(int(str(response.get("live_start_ms"))[:-3]))
         self.thumbnail_url = response.get("pic")
