@@ -16,3 +16,9 @@ def playback_request(user_id: int, limit, page=None) -> dict:
               f"?__platform=web&user_id={user_id}&limit={limit}"
     response = requests.get(url).json()
     return response
+
+
+def live_info_request(user_id: int) -> dict:
+    url = f"https://cloudac.mildom.com/nonolive/gappserv/live/enterstudio?__platform=web&user_id={user_id}"
+    response = requests.get(url).json()
+    return response

@@ -79,6 +79,42 @@ class PlayBack:
         self.author = author
 
 
+class LiveStream:
+    def __init__(self, user_id: int):
+        if type(user_id) is not int:
+            raise TypeError(f'must be int, not {type(user_id).__name__}')
+        response = api_request.live_info_request(user_id)["body"]
+        # 配信
+        if response["anchor_live"] == 13:
+            self.is_live = True
+        else:
+            self.is_live = False
+        self.live_title = response.get("anchor_intro")
+        self.live_description = response.get("live_intro")
+        self.resolutions: list = []
+        for i in response["ext"]["cmode_params"]:
+            self.resolutions.append(i["pixel"]+"p")
+        self.special_gift_list = response.get("ext").get("special_gift_list")
+        self.started_since = datetime.fromtimestamp(int(str(response.get("live_start_ms"))[:-3]))
+        self.thumbnail_url = response.get("pic")
+        self.viewers = response.get("viewers")
+        self.playback_permission = response.get("playback_permission")
+        if response.get("realtime_playback_on") == 1:
+            self.is_dvr_enabled = True
+            dvr_info = response["realtime_playback_info"]
+            self.dvr_audio_url = {"audio_url": dvr_info["audio_url"]}
+            self.dvr_videos = dvr_info["video_link"]
+        else:
+            self.is_dvr_enabled = False
+        # 配信者
+        self.author_id = user_id
+        self.author_name = response.get("loginname")
+        self.author_avatar_url = response.get("avatar")
+        self.author_fans = response.get("fans")
+        self.author_level = response.get("level")
+        self.author_description = response.get("intro")
+
+
 def is_live(user_id: int) -> bool:
     if type(user_id) is not int:
         raise TypeError(f'must be int, not {type(user_id).__name__}')
