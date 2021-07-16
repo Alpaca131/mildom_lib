@@ -85,7 +85,7 @@ class LiveStream:
             raise TypeError(f'must be int, not {type(user_id).__name__}')
         response = api_request.live_info_request(user_id)["body"]
         # 配信
-        if response["anchor_live"] == 13:
+        if response["anchor_live"] == 11:
             self.is_live = True
         else:
             self.is_live = False
