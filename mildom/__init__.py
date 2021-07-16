@@ -93,7 +93,7 @@ class LiveStream:
         self.live_description = response.get("live_intro")
         self.resolutions: list = []
         for i in response["ext"]["cmode_params"]:
-            self.resolutions.append(i["pixel"]+"p")
+            self.resolutions.append(i["pixel"] + "p")
         self.special_gift_list = response.get("ext").get("special_gift_list")
         self.started_since = datetime.fromtimestamp(int(str(response.get("live_start_ms"))[:-3]))
         self.thumbnail_url = response.get("pic")
@@ -106,6 +106,8 @@ class LiveStream:
             self.dvr_videos = dvr_info["video_link"]
         else:
             self.is_dvr_enabled = False
+            self.dvr_audio_url = None
+            self.dvr_videos = None
         # 配信者
         self.author_id = user_id
         self.author_name = response.get("loginname")
@@ -113,6 +115,9 @@ class LiveStream:
         self.author_fans = response.get("fans")
         self.author_level = response.get("level")
         self.author_description = response.get("intro")
+
+    def get_user(self):
+        return User(self.author_id)
 
 
 def is_live(user_id: int) -> bool:
