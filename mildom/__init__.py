@@ -119,6 +119,9 @@ class LiveStream:
     def get_user(self):
         return User(self.author_id)
 
+    def update(self):
+        self.__init__(self.author_id)
+
 
 def is_live(user_id: int) -> bool:
     if type(user_id) is not int:
