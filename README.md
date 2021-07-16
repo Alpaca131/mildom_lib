@@ -11,20 +11,17 @@ If you find any bugs, please report it on issues by English or Japanese.
 # 対応状況
 - ProfileV2 API
 - PlayBack API (配信アーカイブ)
+  - アーカイブの範囲取得
+- EnterStudio API (ライブ配信)
 
 # 対応予定
 - async/await(非同期処理)
-- PlayBack APIでのアーカイブの範囲取得
 
 # 注意
 あくまでも**非公式APIの非公式ラッパー**です。開発が継続される保証はありません。
-開発者は募集中です。
+開発者は募集中です。  
+※バージョン2.0には破壊的変更を含む予定です。
 
-# 破壊的変更
-バージョン2.0には破壊的変更を含みます。
-```python
-from mildom import api_request
-```
 # 使い方
 - ユーザーオブジェクトを作成して詳細を取得<br>
 情報を更新する時は、User.updateで情報を更新できます。
@@ -105,4 +102,20 @@ legacy api time: 0.08169150960445404
 index api time: 0.049523269319534304
 ----------------------------------------------
 legacy api time: 0.10116533222198486
+```
+
+## LiveStream(ライブ配信)オブジェクト -EnterStudio API-
+
+```python
+import mildom
+live_stream = mildom.LiveStream(user_id)
+
+# 配信状況を取得
+print(live_stream.is_live)
+# タイトルを取得
+print(live_stream.title)
+# m3u8形式でストリーミングのURLを取得(VLCなどで再生可能)
+if live_stream.is_dvr_enabled:
+    # 配信者がDVRを有効にしていないと取得不可
+    video_stream_links = live_stream.dvr_videos
 ```

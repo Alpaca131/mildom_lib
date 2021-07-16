@@ -89,8 +89,8 @@ class LiveStream:
             self.is_live = True
         else:
             self.is_live = False
-        self.live_title = response.get("anchor_intro")
-        self.live_description = response.get("live_intro")
+        self.title = response.get("anchor_intro")
+        self.description = response.get("live_intro")
         self.resolutions: list = []
         for i in response["ext"]["cmode_params"]:
             self.resolutions.append(str(i["pixel"]) + "p")
