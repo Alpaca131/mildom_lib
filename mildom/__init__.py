@@ -1,6 +1,7 @@
 from _warnings import warn
 from datetime import datetime
 
+import mildom
 from mildom import api_request
 
 
@@ -133,3 +134,38 @@ def is_live(user_id: int) -> bool:
         return True
     else:
         return False
+
+
+class SearchResult:
+    def __init__(self, res: dict):
+        self.clip_videos: list = res.get("clip_video")
+        self.live_streams: list = res.get("live_anchors")
+        self.recommended_live_streams: list = res.get("rec_live_anchors")
+        self.videos: list = res.get("user_video")
+        self.users: list = res.get("users")
+        self.playbacks: list = res.get("video_list")
+
+
+def search(query: str, category=None) -> SearchResult:
+    category_dict = {"user": 1,
+                     "live_stream": 2,
+                     "video": 3,
+                     "playback": 4,
+                     "recommended_live_stream": 5,
+                     "clip_video": 6}
+    if category is None:
+        response = api_request.search_request(query)["body"]
+        search_result = SearchResult(response)
+    else:
+        if category not in category_dict:
+            type_code = category_dict[category]
+            response = api_request.search_request(query, type_code)["body"]
+            search_result = SearchResult(response)
+        else:
+            raise ValueError(
+                """
+                "category" variable must be one of these: 
+                ["user", "live_stream", "video", "playback", "recommended_live_stream", "clip_video"]
+                """
+            )
+    return search_result
