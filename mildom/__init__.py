@@ -164,7 +164,7 @@ def search(query: str, category=None) -> SearchResult:
         else:
             raise ValueError(
                 """
-                "category" variable must be one of these: 
+                "category" arguments must be one of these: 
                 ["user", "live_stream", "video", "playback", "recommended_live_stream", "clip_video"]
                 """
             )
