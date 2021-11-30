@@ -6,7 +6,7 @@ with open("README.md", "r", encoding="utf-8") as f:
 
 setuptools.setup(
     name="mildom",
-    version="1.3.2",
+    version="1.4",
     author="Alpaca131",
     author_email="iwa124816@gmail.com",
     description="Unofficial wrapper for mildom api.",
