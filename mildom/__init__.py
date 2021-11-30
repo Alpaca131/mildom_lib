@@ -6,7 +6,7 @@ from mildom import api_request
 
 class User:
     def __init__(self, user_id: int):
-        if type(user_id) is not int:
+        if not isinstance(user_id, int):
             raise TypeError(f'must be int, not {type(user_id).__name__}')
         response = api_request.profile_v2_request(user_id)
         if response['code'] == 1:
@@ -20,24 +20,25 @@ class User:
             live = True
         else:
             live = False
-        self.avatar_url = user_info.get('avatar')
-        self.fans = user_info.get('fans')
-        self.is_live = live
-        self.level = user_info.get('level')
-        self.name = user_info.get('loginname')
-        self.official = official
-        self.live_description = user_info.get('intro')
-        self.exp = user_info.get('exp')
-        self.country = user_info.get('exp')
-        self.id = user_info.get('user_id')
-        self.sex = user_info.get('sex')
-        self.status = user_info.get('status')
-        self.user_album = user_info.get('user_album')
-        self.viewers = user_info.get('viewers')
-        self.gift_revenue = user_info.get('gift_revenue_history')
-        self.latest_live_title = user_info.get('anchor_intro')
-        self.latest_live_thumbnail = user_info.get('pic')
-        self.birth = user_info.get('birth')
+        self.avatar_url: str = user_info.get('avatar')
+        self.fans: int = user_info.get('fans')
+        self.is_live: bool = live
+        self.level: int = user_info.get('level')
+        self.name: str = user_info.get('loginname')
+        self.official: bool = official
+        self.live_description: str = user_info.get('intro')
+        self.exp: float = user_info.get('exp')
+        self.country: str = user_info.get('exp')
+        self.id: int = user_info.get('user_id')
+        self.sex: int = user_info.get('sex')
+        self.status: int = user_info.get('status')
+        self.user_album: list = user_info.get('user_album')
+        self.viewers: int = user_info.get('viewers')
+        self.gift_revenue: int = user_info.get('gift_revenue_history')
+        self.latest_live_title: str = user_info.get('anchor_intro')
+        self.latest_live_thumbnail: str = user_info.get('pic')
+        self.latest_live_tags: list = user_info.get('live_tags')
+        self.birth: str = user_info.get('birth')
 
     def fetch_playback(self, limit: int = 30, index: int = None):
         user_id = self.id
