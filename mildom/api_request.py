@@ -4,6 +4,8 @@ import requests
 def profile_v2_request(user_id: int) -> dict:
     url = f"https://cloudac.mildom.com/nonolive/gappserv/user/profileV2?user_id={user_id}&__platform=web"
     response = requests.get(url).json()
+    if response["code"] == 1:
+        raise ConnectionRefusedError("rate limit exceeded. code: 1")
     return response
 
 
