@@ -1,7 +1,6 @@
 from _warnings import warn
 from datetime import datetime
 
-import mildom
 from mildom import api_request
 
 
@@ -43,7 +42,7 @@ class User:
 
     def fetch_playback(self, limit: int = 30, index: int = None):
         user_id = self.id
-        if type(limit) is not int:
+        if not isinstance(limit, int):
             raise TypeError(f'must be int, not {type(index).__name__}')
         if index is not None:
             if type(index) is not int:
@@ -83,7 +82,7 @@ class PlayBack:
 
 class LiveStream:
     def __init__(self, user_id: int):
-        if type(user_id) is not int:
+        if not isinstance(user_id, int):
             raise TypeError(f'must be int, not {type(user_id).__name__}')
         response = api_request.live_info_request(user_id)["body"]
         # 配信
@@ -126,7 +125,7 @@ class LiveStream:
 
 
 def is_live(user_id: int) -> bool:
-    if type(user_id) is not int:
+    if not isinstance(user_id, int):
         raise TypeError(f'must be int, not {type(user_id).__name__}')
     response = api_request.profile_v2_request(user_id)
     anchor_live = response['body']['user_info']['anchor_live']
