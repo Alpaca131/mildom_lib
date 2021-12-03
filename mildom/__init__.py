@@ -157,15 +157,15 @@ def search(query: str, category=None) -> SearchResult:
         response = api_request.search_request(query)["body"]
         search_result = SearchResult(response)
     else:
-        if category not in category_dict:
+        if category in category_dict:
             type_code = category_dict[category]
             response = api_request.search_request(query, type_code)["body"]
             search_result = SearchResult(response)
         else:
             raise ValueError(
                 """
-                "category" arguments must be one of these: 
-                ["user", "live_stream", "video", "playback", "recommended_live_stream", "clip_video"]
+"category" arguments must be one of these: 
+["user", "live_stream", "video", "playback", "recommended_live_stream", "clip_video"]
                 """
             )
     return search_result
