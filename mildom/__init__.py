@@ -102,9 +102,13 @@ class LiveStream:
         self.playback_permission = response.get("playback_permission")
         if response.get("realtime_playback_on") == 1:
             self.is_dvr_enabled = True
-            dvr_info = response["realtime_playback_info"]
-            self.dvr_audio_url = {"audio_url": dvr_info["audio_url"]}
-            self.dvr_videos = dvr_info["video_link"]
+            dvr_info = response.get("realtime_playback_info")
+            if dvr_info:
+                self.dvr_audio_url = {"audio_url": dvr_info["audio_url"]}
+                self.dvr_videos = dvr_info["video_link"]
+            else:
+                self.dvr_audio_url = None
+                self.dvr_videos = None
         else:
             self.is_dvr_enabled = False
             self.dvr_audio_url = None
