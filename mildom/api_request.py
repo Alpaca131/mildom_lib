@@ -23,7 +23,7 @@ def playback_request(user_id: int, limit, page=None) -> dict:
 
 
 def live_info_request(user_id: int) -> dict:
-    url = f"https://cloudac.mildom.com/nonolive/gappserv/live/enterstudio?__platform=web&user_id={user_id}"
+    url = f"https://cloudac.mildom.com/nonolive/gappserv/live/enterstudio?__platform=web&user_id={user_id}&mark=1"
     response = requests.get(url).json()
     if response["code"] == 1:
         raise ConnectionRefusedError("rate limit exceeded. code: 1")
