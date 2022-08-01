@@ -20,13 +20,12 @@ If you find any bugs, please report it on issues by English or Japanese.
 # 注意 - notice-
 あくまでも**非公式APIの非公式ラッパー**です。開発が継続される保証はありません。  
 **This is unofficial wrapper**. There is no guarantee of continuous development.  
-開発者は募集中です。  
-※バージョン2.0には破壊的変更を含む予定です。
+※バージョン2.0でDiscord Bot等で使用可能なasyncモジュールを入れる予定です。
 
 # 使い方 -how to use-
 - 下の例に沿って各種オブジェクトを生成して使用する。  
   Use as the instruction below.
-- mildom.api_request から各種API1のレスポンスをJSON(dict)で受け取る。  
+- mildom.api_request から各種APIのレスポンスをJSON(dict)で受け取る。  
   Use mildom.api_request to get API response as json(dict).
 
 ## Userオブジェクト -ProfileV2 API-
